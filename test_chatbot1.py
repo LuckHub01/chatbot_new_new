@@ -40,7 +40,7 @@ st.logo(logo, icon_image=logo)
 
 
 
-translator = Translator()
+#translator = Translator()
 
 def translate_to_french(text):
     try:
