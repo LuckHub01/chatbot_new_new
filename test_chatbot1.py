@@ -29,7 +29,8 @@ def detect_language(text):
     except Exception as e:
         return "unknown"
 
-from googletrans import Translator
+# from googletrans import Translator
+from deep_translator import GoogleTranslator
 
 
 logo = r"C:\Users\user\Documents\Stages\ChatBot\data\images\genai1.png"  # Remplacez par le chemin de votre image
@@ -42,10 +43,20 @@ st.logo(logo, icon_image=logo)
 translator = Translator()
 
 def translate_to_french(text):
-    return translator.translate(text, src='auto', dest='fr').text
+    try:
+        return GoogleTranslator(source='auto', target='fr').translate(text)
+    except Exception as e:
+        st.error(f"Erreur lors de la traduction en français : {e}")
+        return text
+    #return translator.translate(text, src='auto', dest='fr').text
 
 def translate_to_original_lang(text, target_lang):
-    return translator.translate(text, src='fr', dest=target_lang).text
+    try:
+        return GoogleTranslator(source='fr', target=target_lang).translate(text)
+    except Exception as e:
+        st.error(f"Erreur lors de la traduction dans la langue cible : {e}")
+        return text
+    #return translator.translate(text, src='fr', dest=target_lang).text
 
 
 gen_config=genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
